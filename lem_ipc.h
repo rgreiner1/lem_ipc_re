@@ -30,6 +30,8 @@ typedef struct t_msg{
     int pos_y;
     int team_target;
     int target_index;
+    bool target_died;
+    int killer_team;
 }t_msg;
 
 typedef struct t_teams{
@@ -55,6 +57,7 @@ typedef struct t_ipc{
     int map[HEIGHT][WEIGHT];
     t_target targets[MAX_TEAMS];
     t_teams teams[MAX_TEAMS];
+    int dead_players[MAX_PLAYERS];
     int turn_nbr;
 }t_ipc;
 

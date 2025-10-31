@@ -49,8 +49,8 @@ void init_teams(t_ipc *ipc){
     for (size_t i = 0; i < MAX_TEAMS; i++){
         ipc->teams[i].nbr_player_team = 0;
         ipc->teams[i].alive_players = 0;
-        key_t key = ftok("/tmp", i);
-        ipc->teams[i].id_msg = msgget(key, IPC_CREAT | IPC_EXCL | 600);
+        key_t key = ftok("/tmp", i + 1);
+        ipc->teams[i].id_msg = msgget(key, IPC_CREAT | IPC_EXCL | 0666);
         if (ipc->teams[i].id_msg == -1){
             write(2, "Error msgget\n", 14);
             exit(1);
@@ -96,4 +96,7 @@ void init_first_player(t_ipc *ipc){
     place_player(ipc, team, ipc->teams[team - 1].nbr_player_team - 1);
     data_player.index = ipc->nbr_player;
     data_player.team = team;
+    for (int i = 0; i < MAX_PLAYERS; i++){
+        ipc->dead_players[i] = -1;
+    }
 }
